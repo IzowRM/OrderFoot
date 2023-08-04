@@ -12,7 +12,7 @@ const Header = (props) => {
       <header className={classes.header}>
         <h1>ReactMeals</h1>
           {!props.isRegistered && <><button onClick={props.onregisteredHandlers}>Connection</button> <button onClick={props.onregisteredHandlers}>Sign up !</button></>}
-          {props.isRegistered && <button onClick={props.onSignUpHandlers}>disconnect</button>}
+          {props.isRegistered && <button onClick={props.onIsConnectedHandler}>disconnect</button>}
         <HeaderCartButton onClick={props.onShowCart} />
       </header>
       <div className={classes['main-image']}>

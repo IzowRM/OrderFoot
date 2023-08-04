@@ -20,8 +20,9 @@ export const FormSignUp = (props) => {
                 id: key,
                 ...data[key]
             }));
+            console.log(dataLogin.some(entry => entry.id));
             console.log(dataLogin);
-            idExists = dataLogin.some(entry => entry.id === enteredName)
+            idExists = dataLogin.some(entry => entry.id.toLowerCase().toString() === enteredEmail.toLowerCase().toString())
             console.log(idExists)
         } catch (error) {
             console.error('Error fetching menu:', error);
@@ -73,12 +74,14 @@ export const FormSignUp = (props) => {
             return;
         }
 
-        console.log(enteredName);
+
 
         const identifier = {
             id: enteredEmail,
             password: enteredName
         }
+        console.log(identifier.id)
+        console.log(identifier.password)
         addIdentifierHandler(identifier)
         // nameInputRef.current.value = ''; => NOT IDEAL, DON'T MANIPULATE THE DOM
         resetNameInput();

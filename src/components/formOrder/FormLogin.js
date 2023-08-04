@@ -6,13 +6,17 @@ import {useState} from "react";
 export const FormLogin = (props) => {
 
     const [idExist, setIdExist] = useState(false);
+    const [isBadPassword , setIsBadPassword] = useState(false);
 
     function idExistHandler() {
         setIdExist(previdExist => !previdExist);
     }
+    function isBadPasswordHandlr() {
+        setIsBadPassword(previdExist => !previdExist);
+    }
 
     async function addIdentifierHandler(dataLogin) {
-        //Demamde de data
+        let passwordExist = false
         let idExists = false;
         try {
             const response = await fetch('https://mdpdinner-ee1eb-default-rtdb.europe-west1.firebasedatabase.app/identifiant.json');
@@ -22,25 +26,17 @@ export const FormLogin = (props) => {
                 id: key,
                 ...data[key]
             }));
-            console.log(dataLogin);
-            idExists = dataLogin.some(entry => entry.id === enteredName)
+
+            idExists = dataLogin.some(entry => entry.id.toLowerCase().toString() === enteredEmail.toLowerCase().toString() && entry.password.toString() === enteredName.toString())
+
             console.log(idExists)
+
+            if(idExists) {
+                props.onIsConnectedHandler()
+            }
+
         } catch (error) {
             console.error('Error fetching menu:', error);
-        }
-        if (!idExists) {
-            // Si l'ID n'existe pas, envoie et login
-            const response = await fetch('https://mdpdinner-ee1eb-default-rtdb.europe-west1.firebasedatabase.app/identifiant.json', {
-                method: 'POST',
-                body: JSON.stringify(dataLogin),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            const data = await response.json();
-            console.log(data);
-        } else {
-            setIdExist(true)
         }
     }
 
@@ -131,7 +127,7 @@ export const FormLogin = (props) => {
                         Close
                     </button>
                 </div>
-                {idExist && <p>email already registered</p>}
+                {idExist && !isBadPassword && <p>Bad password</p>}
             </form>
         </Modal>
     );

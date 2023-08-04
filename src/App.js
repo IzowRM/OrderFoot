@@ -1,5 +1,4 @@
 import {useState} from 'react';
-
 import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
 import Cart from './components/Cart/Cart';
@@ -8,6 +7,13 @@ import {FormLogin} from "./components/formOrder/FormLogin";
 import {FormSignUp} from "./components/formOrder/FormSignUp";
 
 function App() {
+    const [isConnected, setIsConnected] = useState(false)
+
+    const isConnectedHandler = () => {
+        setIsConnected(previousIsConnected => !previousIsConnected)
+        console.log('isConnected :' + isConnected)
+    };
+
     const [cartIsShown, setCartIsShown] = useState(false);
     const CartHandler = () => {
         setCartIsShown(previous => !previous)
@@ -28,15 +34,20 @@ function App() {
 
     return (
         <CartProvider>
-            {isSignUp && <FormSignUp onSignUpHandlers={signUpHandlers}></FormSignUp>}
-            {isRegistered && <FormLogin onregisteredHandlers={registeredHandlers}></FormLogin>}
+            {isSignUp && !isConnected && <FormSignUp onSignUpHandlers={signUpHandlers}></FormSignUp>}
+            {isRegistered && !isConnected && <FormLogin onregisteredHandlers={registeredHandlers}
+                                                        onIsConnectedHandler={isConnectedHandler}
+                                                        isConnected={isConnected}
+                                                        setIsConnected={setIsConnected}></FormLogin>}
             {cartIsShown && <Cart onClose={CartHandler}/>}
 
             <Header onShowCart={CartHandler}
                     onregisteredHandlers={registeredHandlers}
                     isRegistered={isRegistered}
                     onRegisteredHandlers={registeredHandlers}
-                    onSignUpHandlers={signUpHandlers}/>
+                    onSignUpHandlers={signUpHandlers}
+                    onIsConnectedHandler={isConnectedHandler}/>
+
             <main>
 
                 <Meals/>
