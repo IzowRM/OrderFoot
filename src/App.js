@@ -34,8 +34,8 @@ function App() {
 
     return (
         <CartProvider>
-            {isSignUp && !isConnected && <FormSignUp onSignUpHandlers={signUpHandlers}></FormSignUp>}
-            {isRegistered && !isConnected && <FormLogin onregisteredHandlers={registeredHandlers}
+            {isSignUp && <FormSignUp onSignUpHandlers={signUpHandlers}></FormSignUp>}
+            {isRegistered  && <FormLogin onregisteredHandlers={registeredHandlers}
                                                         onIsConnectedHandler={isConnectedHandler}
                                                         isConnected={isConnected}
                                                         setIsConnected={setIsConnected}></FormLogin>}

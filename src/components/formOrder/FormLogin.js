@@ -18,6 +18,7 @@ export const FormLogin = (props) => {
     async function addIdentifierHandler(dataLogin) {
         let passwordExist = false
         let idExists = false;
+
         try {
             const response = await fetch('https://mdpdinner-ee1eb-default-rtdb.europe-west1.firebasedatabase.app/identifiant.json');
             const data = await response.json();
@@ -32,7 +33,7 @@ export const FormLogin = (props) => {
             console.log(idExists)
 
             if(idExists) {
-                props.onIsConnectedHandler()
+                props.onregisteredHandlers()
             }
 
         } catch (error) {
